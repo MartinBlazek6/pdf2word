@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StreamUtils;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.zip.ZipEntry;
@@ -22,6 +23,28 @@ public class DownloadServiceImpl implements DownloadService {
         response.setHeader("Content-Disposition", "attachment; filename=download.zip");
         try(ZipOutputStream zipOutputStream = new ZipOutputStream(response.getOutputStream())) {
             for(String fileName : listOfFileNames) {
+                FileSystemResource fileSystemResource = new FileSystemResource(fileName);
+                ZipEntry zipEntry = new ZipEntry(fileSystemResource.getFilename());
+                zipEntry.setSize(fileSystemResource.contentLength());
+                zipEntry.setTime(System.currentTimeMillis());
+
+                zipOutputStream.putNextEntry(zipEntry);
+
+                StreamUtils.copy(fileSystemResource.getInputStream(), zipOutputStream);
+                zipOutputStream.closeEntry();
+            }
+            zipOutputStream.finish();
+        } catch (IOException e) {
+            logger.error(e.getMessage(), e);
+        }
+    }
+
+    @Override
+    public void downloadZipFile2(HttpServletResponse response, List<File> listOfFileNames) {
+        response.setContentType("application/zip");
+        response.setHeader("Content-Disposition", "attachment; filename=download.zip");
+        try(ZipOutputStream zipOutputStream = new ZipOutputStream(response.getOutputStream())) {
+            for(File fileName : listOfFileNames) {
                 FileSystemResource fileSystemResource = new FileSystemResource(fileName);
                 ZipEntry zipEntry = new ZipEntry(fileSystemResource.getFilename());
                 zipEntry.setSize(fileSystemResource.contentLength());

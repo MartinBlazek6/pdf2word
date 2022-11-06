@@ -1,6 +1,7 @@
 package com.javacodepoint.fileupload.service;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 import java.util.List;
 
 public interface DownloadService {
@@ -10,4 +11,6 @@ public interface DownloadService {
      * @param listOfFileNames
      */
     void downloadZipFile(HttpServletResponse response, List<String> listOfFileNames);
+
+    void downloadZipFile2(HttpServletResponse response, List<File> listOfFileNames);
 }

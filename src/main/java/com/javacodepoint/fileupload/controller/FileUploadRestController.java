@@ -38,6 +38,7 @@ public class FileUploadRestController {
 	public static String uploadDirectory = System.getProperty("user.home")+"/ConvertedFiles/";
 	public static String fileaa;
 	public List<String> allFiles;
+	public List<File> allFiless;
 
 	@GetMapping("/api/f")
 	public String xx() throws IOException {
@@ -59,8 +60,10 @@ public class FileUploadRestController {
 			PdfDocument pw=new PdfDocument();
 			pw.loadFromBytes(uploadfile.getBytes());
 			pw.saveToFile(pathX, FileFormat.DOCX);
+
 			fileaa = pathX;
 			allFiles.add(pathX);
+			allFiless.add(new File(pathX));
 			pw.close();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -100,7 +103,7 @@ public class FileUploadRestController {
 	@GetMapping("/dd")
 	public void downloadZipFile(HttpServletResponse response) {
 		List<String> listOfFileNames = getListOfFileNames();
-		downloadService.downloadZipFile(response, listOfFileNames);
+		downloadService.downloadZipFile2(response, allFiless);
 	}
 
 	/**
