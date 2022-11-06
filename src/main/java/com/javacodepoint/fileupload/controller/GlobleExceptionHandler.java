@@ -1,6 +1,12 @@
-package com.javacodepoint.fileupload;
+package com.javacodepoint.fileupload.controller;
 
 import javax.servlet.http.HttpServletRequest;
+
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
