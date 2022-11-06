@@ -24,7 +24,7 @@ public class DownloadServiceImpl implements DownloadService {
         try(ZipOutputStream zipOutputStream = new ZipOutputStream(response.getOutputStream())) {
             for(String fileName : listOfFileNames) {
                 FileSystemResource fileSystemResource = new FileSystemResource(fileName);
-                ZipEntry zipEntry = new ZipEntry(fileSystemResource.getFilename());
+                ZipEntry zipEntry = new ZipEntry(fileName);
                 zipEntry.setSize(fileSystemResource.contentLength());
                 zipEntry.setTime(System.currentTimeMillis());
 
@@ -46,7 +46,7 @@ public class DownloadServiceImpl implements DownloadService {
         try(ZipOutputStream zipOutputStream = new ZipOutputStream(response.getOutputStream())) {
             for(File fileName : listOfFileNames) {
                 FileSystemResource fileSystemResource = new FileSystemResource(fileName);
-                ZipEntry zipEntry = new ZipEntry(fileSystemResource.getFilename());
+                ZipEntry zipEntry = new ZipEntry(fileName.getName());
                 zipEntry.setSize(fileSystemResource.contentLength());
                 zipEntry.setTime(System.currentTimeMillis());
 

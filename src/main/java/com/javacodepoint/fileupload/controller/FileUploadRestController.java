@@ -104,6 +104,7 @@ public class FileUploadRestController {
 	public void downloadZipFile(HttpServletResponse response) {
 		List<String> listOfFileNames = getListOfFileNames();
 		downloadService.downloadZipFile2(response, allFiless);
+		allFiles.clear();
 	}
 
 	/**
