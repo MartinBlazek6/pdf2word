@@ -19,6 +19,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -83,7 +84,7 @@ public class FileUploadRestController {
 		String filename = fileaa;
 		File file = new File(filename);
 		//file = allFiless.get(allFiles.size());
-		InputStreamResource resource = new InputStreamResource(Files.newInputStream(file.toPath()));
+		InputStreamResource resource = new InputStreamResource(Files.newInputStream(Path.of(fileaa)));
 
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("Content-Disposition",
