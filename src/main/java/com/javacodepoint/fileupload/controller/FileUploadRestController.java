@@ -35,7 +35,7 @@ public class FileUploadRestController {
      */
 	//private static String UPLOAD_PATH = "/Users/blazek/Downloads/";
 
-	public static String uploadDirectory = System.getProperty("user.home")+"/ConvertedFiles/";
+	public static String uploadDirectory = System.getProperty("user.home")+"/ConvertedFiles/"+System.currentTimeMillis()+"/";
 
 	public static String fileaa;
 	public List<String> allFiles;
@@ -81,6 +81,7 @@ public class FileUploadRestController {
 	{
 		String filename = fileaa;
 		File file = new File(filename);
+		//file = allFiless.get(allFiles.size());
 		InputStreamResource resource = new InputStreamResource(Files.newInputStream(file.toPath()));
 
 		HttpHeaders headers = new HttpHeaders();
