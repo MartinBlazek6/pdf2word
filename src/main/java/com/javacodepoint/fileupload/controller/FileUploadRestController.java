@@ -35,7 +35,7 @@ public class FileUploadRestController {
      */
 	//private static String UPLOAD_PATH = "/Users/blazek/Downloads/";
 
-	public static String uploadDirectory = System.getProperty("user.home")+"/ConvertedFiles/"+System.currentTimeMillis()+"/";
+	public static String uploadDirectory;
 
 	public static String fileaa;
 	public List<String> allFiles;
@@ -51,6 +51,7 @@ public class FileUploadRestController {
 	@PostMapping("/api/fileupload")
 	public void uploadFile(@RequestParam("multipartFile") MultipartFile uploadfile) {
 		//uploadDirectory = System.getProperty("user.home")+"/ConvertedFiles"+System.currentTimeMillis()+"/";
+		uploadDirectory = System.getProperty("user.home")+"/ConvertedFiles/"+System.currentTimeMillis()+"/";
 		String pathX = uploadDirectory + Objects.requireNonNull(uploadfile.getOriginalFilename()).replace("pdf","docx");
 
 		if (uploadfile.isEmpty()) {
