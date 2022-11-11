@@ -18,12 +18,13 @@
 ::-webkit-scrollbar-thumb {background-color: #C0C0C0; border-radius: 10px;}
 </style>
 </head>
-<body>
+<body vlink="yellow" alink="green">
     <div id="main-container">
-        <h3 class="text-info">Spring Boot file upload with advance progress-bar using Ajax</h3>
+        <h3 class="text-info">PDF to DOCX(word) convertor</h3>
         <hr>
         <div style="margin-bottom: 20px">
-            <input type="file" id="files" multiple style="margin-bottom: 20px" />
+<!--            <input type="file" id="files" multiple style="margin-bottom: 20px" />-->
+            <input type="file" id="files" placeholder="Upload file" style="margin-bottom: 20px" />
             <button class="btn btn-primary" type="button" onclick="startUploading()" ><i class="fa fa-recycle"></i> Convert to word</button>
         </div>
         <div id="upload-status-container">
@@ -35,17 +36,18 @@
                 <table class="table">
                     <tbody></tbody>
                 </table>
+                <a href='/download' ><button class="btn btn-primary" type="button" ><i class="fa fa-folder-open-o"></i> Download</button></a>
             </div>
         </div>
     </div>
-    <button class="btn btn-primary" type="button" ><i class="fa fa-folder-open-o"></i> Open directory</button>
+
 
 </body>
 <script>
 
     /* Globle variables */
     var totalFileCount, fileUploadCount, fileSize, successCount;
- 
+
     /* start uploading files */
     function startUploading() {
         var files = document.getElementById('files').files;
@@ -56,11 +58,11 @@
         fileUploadCount=0;
         successCount = 0;
         prepareProgressBarUI(files);
-         
-        // upload through ajax call     
+
+        // upload through ajax call
         uploadFile();
     }
-     
+
     /* This method will be called to prepare progress-bar UI */
     function prepareProgressBarUI(files){
         totalFileCount = files.length;
@@ -77,7 +79,7 @@
         }
         $("#upload-status-container").show();
     }
-     
+
     /* parse the file size in kb/mb/gb */
     function parseFileSize(size){
         var precision=1;
@@ -96,7 +98,7 @@
         }
         return 0;
     }
- 
+
     /* one by one file will be uploaded to the server by ajax call*/
     function uploadFile() {
         var file = document.getElementById('files').files[fileUploadCount];
@@ -110,7 +112,7 @@
         xhr.open("POST", "/api/fileupload");
         xhr.send(fd);
     }
- 
+
     /* This function will continueously update the progress bar */
     function onUploadProgress(e) {
         if (e.lengthComputable) {
@@ -129,7 +131,7 @@
             alert('unable to compute');
         }
     }
- 
+
     /* This function will call when upload is completed */
     function onUploadComplete(e, error) {
         var pbar = $('#progress-bar-'+fileUploadCount);
@@ -148,7 +150,7 @@
         }
         fileUploadCount++;
         if (fileUploadCount < totalFileCount) {
-            //ajax call if more files are there 
+            //ajax call if more files are there
             uploadFile();
             $("#upload-header-text").html((fileUploadCount)+" of "+totalFileCount+" file(s) is converted");
         } else if(successCount===0){
@@ -157,13 +159,13 @@
         	$("#upload-header-text").html(successCount+" of "+totalFileCount+" file(s) converted successfully");
         }
     }
- 
+
     /* This function will call when an error come while uploading */
     function onUploadError(e) {
         console.error("Something went wrong!");
         onUploadComplete(e,true);
     }
-     
+
     function showHide(ele){
         if($(ele).hasClass('fa-window-minimize')){
             $(ele).removeClass('fa-window-minimize').addClass('fa-window-restore').attr("title","restore");
