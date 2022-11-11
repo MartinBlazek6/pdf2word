@@ -36,9 +36,11 @@ public class FileUploadRestController {
 	//private static String UPLOAD_PATH = "/Users/blazek/Downloads/";
 
 	public static String uploadDirectory = System.getProperty("user.home")+"/ConvertedFiles/";
+
 	public static String fileaa;
 	public List<String> allFiles;
 	public List<File> allFiless;
+	public List<PdfDocument> allFilessConverted;
 
 	@GetMapping("/api/f")
 	public String xx() throws IOException {
@@ -48,6 +50,7 @@ public class FileUploadRestController {
 
 	@PostMapping("/api/fileupload")
 	public void uploadFile(@RequestParam("multipartFile") MultipartFile uploadfile) {
+		//uploadDirectory = System.getProperty("user.home")+"/ConvertedFiles"+System.currentTimeMillis()+"/";
 		String pathX = uploadDirectory + Objects.requireNonNull(uploadfile.getOriginalFilename()).replace("pdf","docx");
 
 		if (uploadfile.isEmpty()) {
@@ -60,11 +63,13 @@ public class FileUploadRestController {
 			PdfDocument pw=new PdfDocument();
 			pw.loadFromBytes(uploadfile.getBytes());
 			pw.saveToFile(pathX, FileFormat.DOCX);
+			allFilessConverted.add(pw);
 
 			fileaa = pathX;
 			allFiles.add(pathX);
 			allFiless.add(new File(pathX));
 			pw.close();
+			allFiles.clear();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
