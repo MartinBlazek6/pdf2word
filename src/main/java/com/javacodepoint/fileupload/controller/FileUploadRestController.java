@@ -58,6 +58,7 @@ public class FileUploadRestController {
 			System.out.println("please select a file!");
 		}
 
+
 		try {
 			Locale newLocale = Locale.ROOT;
 			Locale.setDefault(newLocale);
