@@ -52,13 +52,13 @@ public class FileUploadRestController {
 	public void uploadFile(@RequestParam("multipartFile") MultipartFile uploadfile) {
 		//uploadDirectory = System.getProperty("user.home")+"/ConvertedFiles"+System.currentTimeMillis()+"/";
 		uploadDirectory = System.getProperty("user.home")+"/ConvertedFiles/"+System.currentTimeMillis()+"/";
-		String pathX = uploadDirectory + Objects.requireNonNull(uploadfile.getOriginalFilename()).replace("pdf","doc");
+		String pathX = uploadDirectory + Objects.requireNonNull(uploadfile.getOriginalFilename());
 
 		if (uploadfile.isEmpty()) {
 			System.out.println("please select a file!");
 		}
 
-
+		pathX = pathX.replace("pdf","docx");
 		try {
 			Locale newLocale = Locale.ROOT;
 			Locale.setDefault(newLocale);
@@ -66,7 +66,6 @@ public class FileUploadRestController {
 			pw.loadFromBytes(uploadfile.getBytes());
 			pw.saveToFile(pathX, FileFormat.DOCX);
 			allFilessConverted.add(pw);
-
 			fileaa = pathX;
 			allFiles.add(pathX);
 			allFiless.add(new File(pathX));
