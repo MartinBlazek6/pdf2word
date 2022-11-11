@@ -84,7 +84,7 @@ public class FileUploadRestController {
 		String filename = fileaa;
 		File file = new File(filename);
 		//file = allFiless.get(allFiles.size());
-		InputStreamResource resource = new InputStreamResource(Files.newInputStream(Path.of(fileaa)));
+		InputStreamResource resource = new InputStreamResource(Files.newInputStream(file.toPath()));
 
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("Content-Disposition",
