@@ -20,7 +20,7 @@ public class ConvertererviceImpl implements ConverterService{
             Path fileNameAndPath = Paths.get(uploadDirectory, file.getOriginalFilename());
             PdfDocument pw=new PdfDocument();
             pw.loadFromBytes(file.getBytes());
-            pw.saveToFile(String.valueOf(fileNameAndPath).replace("pdf","docx"), FileFormat.DOCX);
+            pw.saveToFile(String.valueOf(fileNameAndPath).replace("pdf","doc"), FileFormat.DOC);
             pw.close();
         } catch (IOException e) {
             throw new RuntimeException(e);

@@ -52,7 +52,7 @@ public class FileUploadRestController {
 	public void uploadFile(@RequestParam("multipartFile") MultipartFile uploadfile) {
 		//uploadDirectory = System.getProperty("user.home")+"/ConvertedFiles"+System.currentTimeMillis()+"/";
 		uploadDirectory = System.getProperty("user.home")+"/ConvertedFiles/"+System.currentTimeMillis()+"/";
-		String pathX = uploadDirectory + Objects.requireNonNull(uploadfile.getOriginalFilename()).replace("pdf","docx");
+		String pathX = uploadDirectory + Objects.requireNonNull(uploadfile.getOriginalFilename()).replace("pdf","doc");
 
 		if (uploadfile.isEmpty()) {
 			System.out.println("please select a file!");
