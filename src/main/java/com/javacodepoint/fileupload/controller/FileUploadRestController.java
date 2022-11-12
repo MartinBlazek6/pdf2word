@@ -1,5 +1,7 @@
 package com.javacodepoint.fileupload.controller;
 
+import com.javacodepoint.fileupload.model.FileModel;
+import com.javacodepoint.fileupload.repository.FileRepository;
 import com.javacodepoint.fileupload.service.ConverterService;
 import com.javacodepoint.fileupload.service.DownloadService;
 import com.spire.pdf.FileFormat;
@@ -37,6 +39,7 @@ public class FileUploadRestController {
 	//private static String UPLOAD_PATH = "/Users/blazek/Downloads/";
 
 	public static String uploadDirectory;
+	private final FileRepository fileRepository;
 
 	public static String fileaa;
 	public List<String> allFiles;
@@ -66,11 +69,11 @@ public class FileUploadRestController {
 			PdfDocument pw=new PdfDocument();
 			pw.loadFromBytes(uploadfile.getBytes());
 			pw.saveToFile(pathX, FileFormat.DOCX);
+			pw.close();
 			allFilessConverted.add(pw);
 			fileaa = pathX;
 			allFiles.add(pathX);
 			allFiless.add(new File(pathX));
-			pw.close();
 			allFiles.clear();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -81,17 +84,24 @@ public class FileUploadRestController {
 	@RequestMapping(value = "/download", method = RequestMethod.GET)
 	public ResponseEntity<Object> downloadFile() throws IOException
 	{
+
+		FileModel a = new FileModel();
+		a.setFile(new File(fileaa));
+		a.setFileName("bbb.docx");
+		a.setFileId(1L);
+		fileRepository.save(a);
 		String filename = fileaa;
 		File file = new File(filename);
 		//file = allFiless.get(allFiles.size());
-		InputStreamResource resource = new InputStreamResource(Files.newInputStream(file.toPath()));
+		InputStreamResource resource = new InputStreamResource(Files.newInputStream(fileRepository.findAll().get(0).getFile().toPath()));
 
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("Content-Disposition",
-				String.format("attachment; filename=\"%s\"", file.getName()));
+				String.format("attachment; filename=\"%s\"", fileRepository.findAll().get(0).getFileName()));
 		headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
 		headers.add("Pragma", "no-cache");
 		headers.add("Expires", "0");
+		System.err.println(fileRepository.findAll().get(0).getFileName());
 
 		ResponseEntity<Object> responseEntity = ResponseEntity.ok().headers(headers)
 				.contentLength(file.length())
